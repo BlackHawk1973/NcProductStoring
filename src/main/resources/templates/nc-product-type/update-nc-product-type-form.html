@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Hotels Catalog</title>
+    <!-- подключения локального bootstrap -->
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<!-- верстка с использованием bootstrap -->
+<div class="container-fluid text-center">
+    <div class="container-sm align-content-center text-center">
+        <h1>Редактирование записи в справочнике видов брака</h1>
+        <!-- вывод сообщения danger message -->
+        <p class="alert alert-danger" th:if="${dangerMessage != null}">
+            [[${dangerMessage}]]
+        </p>
+        <form method="post" th:action="@{/nc-product-type/update}" th:object="${ncProductType}">
+            <!-- id (пример с полем только для чтения) -->
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label" for="id">ID: </label>
+                <div class="col-sm-3">
+                    <input class="form-control" type="number" id="id" th:field="*{id}" readonly/>
+                </div>
+            </div>
+
+            <!--Код брака-->
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label" for="code">Код брака: </label>
+                <div class="col-sm-3">
+                    <input class="form-control" type="number" id="code" required min="100" max="999" th:field="*{code}">
+                </div>
+            </div>
+
+            <!--Тип брака-->
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label" for="type">Тип брака: </label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" id="type" required minlength="1" th:field="*{type}">
+                </div>
+            </div>
+            <!--Вид брака-->
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label" for="name">Вид брака: </label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" id="name" required minlength="1" th:field="*{name}">
+                </div>
+            </div>
+
+            <!-- кнопка отправки формы -->
+            <div class="mb-3 row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-5">
+                    <button class="btn btn-success form-control">Сохранить</button>
+                </div>
+                <div class="col-sm-5">
+                    <a class="btn btn-danger form-control" th:href="@{/nc-product-type}">Отменить</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

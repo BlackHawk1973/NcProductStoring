@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Справочник видов продукции</title>
+    <!-- подключения локального bootstrap -->
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<!-- верстка с использованием bootstrap -->
+<div class="container-fluid text-center">
+    <div class="container-sm align-content-center text-center">
+        <h1>Добавление новой записи в справочник видов продукции</h1>
+        <!-- вывод сообщения danger message -->
+        <p class="alert alert-danger" th:if="${dangerMessage != null}">
+            [[${dangerMessage}]]
+        </p>
+        <form method="post" th:action="@{/production/new}" th:object="${production}">
+            <!--Вид продукции-->
+            <div class="container">
+                <div class="mb-3 row">
+                    <label class="col-sm-2 col-form-label align-self-center" for="name">Наименование вида
+                        продукции: </label>
+                    <div class="col-sm-10 justify-content-center">
+                        <input class="form-control align-self-center" type="text" id="name" required minlength="1"
+                               th:field="*{name}">
+                    </div>
+                </div>
+            </div>
+            <!-- кнопка отправки формы -->
+            <div class="mb-3 row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-5">
+                    <button class="btn btn-success form-control">Сохранить</button>
+                </div>
+                <div class="col-sm-5">
+                    <a class="btn btn-danger form-control" th:href="@{/production}">Отменить</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

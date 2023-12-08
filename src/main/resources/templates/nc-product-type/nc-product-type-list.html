@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Справочник видов брака</title>
+    <!-- подключения локального bootstrap -->
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<!-- врестка с использованием bootstrap -->
+<div class="container-fluid text-center">
+    <!-- заголовок страницы -->
+    <h1>Справочник видов брака</h1>
+
+    <!-- вывод сообщения success message -->
+    <p class="alert alert-success" th:if="${successMessage != null}">
+        [[${successMessage}]]
+    </p>
+
+    <!-- вывод сообщения danger message -->
+    <p class="alert alert-danger" th:if="${dangerMessage != null}">
+        [[${dangerMessage}]]
+    </p>
+
+    <!-- вывод справочника через цикл (используется таблица-->
+    <table class="table table-bordered">
+        <!-- шапка таблицы -->
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Код</th>
+            <th>Тип брака</th>
+            <th>Вид брака</th>
+            <th>Действия</th>
+        </tr>
+        </thead>
+        <!-- тело таблицы -->
+        <tbody>
+        <tr th:each="ncProductType: ${ncProductTypes}">
+            <td class="text-end">[[${ncProductType.id}]]</td>
+            <td class="text-center">[[${ncProductType.code}]]</td>
+            <td class="text-start">[[${ncProductType.type}]]</td>
+            <td class="text-start">[[${ncProductType.name}]]</td>
+            <!-- ячейка действия -->
+            <td>
+                <a th:href="@{'/nc-product-type/delete/' + ${ncProductType.id}}" class="btn btn-danger">Удалить</a>
+                <a th:href="@{'/nc-product-type/update/' + ${ncProductType.id}}" class="btn btn-primary">Редактировать</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="col-3">
+            <a class="btn btn-success form-control" th:href="@{/nc-product-type/new}">Добавить новый вид брака</a>
+        </div>
+        <br>
+        <div class="col-3">
+            <a class="btn btn-primary form-control" th:href="@{/}">На главную</a>
+        </div>
+    </div>
+    <br>
+</div>
+</body>
+</html>

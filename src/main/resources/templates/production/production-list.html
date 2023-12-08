@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Справочник видов продукции</title>
+  <!-- подключения локального bootstrap -->
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<!-- верстка с использованием bootstrap -->
+<div class="container-fluid text-center">
+  <!-- заголовок страницы -->
+  <h1>Справочник видов продукции</h1>
+
+  <!-- вывод сообщения success message -->
+  <p class="alert alert-success" th:if="${successMessage != null}">
+    [[${successMessage}]]
+  </p>
+
+  <!-- вывод сообщения danger message -->
+  <p class="alert alert-danger" th:if="${dangerMessage != null}">
+    [[${dangerMessage}]]
+  </p>
+
+  <!-- вывод справочника через цикл (используется таблица-->
+  <table class="table table-bordered">
+    <!-- шапка таблицы -->
+    <thead class="table-dark">
+    <tr>
+      <th>ID</th>
+      <th>Наименование продукции</th>
+      <th>Действия</th>
+    </tr>
+    </thead>
+    <!-- тело таблицы -->
+    <tbody>
+    <tr th:each="production: ${productions}">
+      <td class="text-end">[[${production.id}]]</td>
+      <td class="text-start">[[${production.name}]]</td>
+      <!-- ячейка действия -->
+      <td>
+        <a th:href="@{'/production/delete/' + ${production.id}}" class="btn btn-danger">Удалить</a>
+        <a th:href="@{'/production/update/' + ${production.id}}" class="btn btn-primary">Редактировать</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div class="row">
+    <div class="col-3">
+      <a class="btn btn-success form-control" th:href="@{/production/new}">Добавить новый вид продукции</a>
+    </div>
+    <br>
+    <div class="col-3">
+      <a class="btn btn-primary form-control" th:href="@{/}">На главную</a>
+    </div>
+  </div>
+  <br>
+</div>
+</body>
+</html>
