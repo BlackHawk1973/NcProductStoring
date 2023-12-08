@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.top.ncproductstoring.entity.Production;
 import org.top.ncproductstoring.entity.TechOperation;
-import org.top.ncproductstoring.service.ProductionService;
 import org.top.ncproductstoring.service.TechOperationService;
 
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -48,10 +46,8 @@ public class TechOperationController {
     public String postAddForm(TechOperation techOperation, RedirectAttributes redirectAttributes) throws Exception {
         try {
             Optional<TechOperation> saved = techOperationService.save(techOperation);
-            if (saved.isPresent()) {
-                redirectAttributes.addFlashAttribute("successMessage",
-                        "Запись " + saved.get() + " успешно добавлена");
-            }
+            saved.ifPresent(operation -> redirectAttributes.addFlashAttribute("successMessage",
+                    "Запись " + operation + " успешно добавлена"));
             return "redirect:/tech-operation";
         } catch (Exception e) {
             if(e.getCause() != null && e.getCause().getCause() instanceof SQLIntegrityConstraintViolationException) {

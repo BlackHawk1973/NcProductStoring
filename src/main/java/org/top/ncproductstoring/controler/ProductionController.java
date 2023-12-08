@@ -47,10 +47,8 @@ public class ProductionController {
     public String postAddForm(Production production, RedirectAttributes redirectAttributes) throws Exception {
         try {
             Optional<Production> saved = productionService.save(production);
-            if (saved.isPresent()) {
-                redirectAttributes.addFlashAttribute("successMessage",
-                        "Запись " + saved.get() + " успешно добавлена");
-            }
+            saved.ifPresent(value -> redirectAttributes.addFlashAttribute("successMessage",
+                    "Запись " + value + " успешно добавлена"));
             return "redirect:/production";
         } catch (Exception e) {
             if(e.getCause() != null && e.getCause().getCause() instanceof SQLIntegrityConstraintViolationException) {

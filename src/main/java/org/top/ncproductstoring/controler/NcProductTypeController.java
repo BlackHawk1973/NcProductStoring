@@ -47,10 +47,8 @@ public class NcProductTypeController {
     public String postAddForm(NcProductType ncProductType, RedirectAttributes redirectAttributes) throws Exception {
         try {
             Optional<NcProductType> saved = ncProductTypeService.save(ncProductType);
-            if (saved.isPresent()) {
-                redirectAttributes.addFlashAttribute("successMessage",
-                        "Запись " + saved.get() + " успешно добавлена");
-            }
+            saved.ifPresent(productType -> redirectAttributes.addFlashAttribute("successMessage",
+                    "Запись " + productType + " успешно добавлена"));
             return "redirect:/nc-product-type";
         } catch (Exception e) {
             if(e.getCause() != null && e.getCause().getCause() instanceof SQLIntegrityConstraintViolationException) {
