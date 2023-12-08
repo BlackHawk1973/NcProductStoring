@@ -1,7 +1,6 @@
 package org.top.ncproductstoring.rdb;
 
 import org.springframework.stereotype.Service;
-import org.top.ncproductstoring.entity.NcProductCause;
 import org.top.ncproductstoring.entity.Production;
 import org.top.ncproductstoring.rdb.repository.ProductionRepository;
 import org.top.ncproductstoring.service.ProductionService;

@@ -23,13 +23,6 @@ public class NcProductType {
     private String name;
 
     //Конструкторы
-    public NcProductType(Integer id, Integer code, String type, String name) {
-        this.id = id;
-        this.code = code;
-        this.type = type;
-        this.name = name;
-    }
-
     public NcProductType() {
         id = 0;
         code = 0;
