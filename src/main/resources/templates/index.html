@@ -2,19 +2,56 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Hotels Catalog</title>
-    <!-- подключения локального bootstrap -->
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Учет брака</title>
+    <th:block th:insert="layout/page-layout.html :: page-head"></th:block>
+
 </head>
 <body>
-<h1>Добро пожаловать в систему учета несоответствующей продукции</h1>
-<h5><a th:href="@{/nc-product-type}">Работа со справочником видов брака</a></h5>
-<h5><a th:href="@{/nc-product-cause}">Работа со справочником причин брака</a></h5>
-<h5><a th:href="@{/production}">Работа со справочником видов продукции</a></h5>
-<h5><a th:href="@{/tech-operation}">Работа со справочником видов технологических операций</a></h5>
-<h5><a th:href="@{/sector}">Работа со справочником производственных участков</a></h5>
-<h5><a th:href="@{/team}">Работа со справочником бригад</a></h5>
-<br>
-<h5>Разработал Бурых В.Д., группа Java213 &copy</h5>
+<div class="container-fluid">
+    <div class="navbar navbar-expand-lg navbar-dark bg-secondary">
+        <div class="container-fluid">
+            <a href="" class="navbar-brand">Учет брака</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="nav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a th:href="@{/}" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/defective-act}" class="nav-link">Акты</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Справочники</a>
+                        <ul class="dropdown-menu">
+                            <li><a th:href="@{/nc-product-type}" class="dropdown-item">Виды брака</a></li>
+                            <li><a th:href="@{/nc-product-cause}" class="dropdown-item">Причины брака</a></li>
+                            <li><a th:href="@{/production}" class="dropdown-item">Продукция</a></li>
+                            <li><a th:href="@{/tech-operation}" class="dropdown-item">Технологические операции</a></li>
+                            <li><a th:href="@{/sector}" class="dropdown-item">Производственные участки</a></li>
+                            <li><a th:href="@{/team}" class="dropdown-item">Бригады</a></li>
+                            <li><a th:href="@{/worker}" class="dropdown-item">Сотрудники</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Отчеты</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="" class="dropdown-item">Отчет за месяц</a></li>
+                            <li><a href="" class="dropdown-item">Отчет за квартал</a></li>
+                            <li><a href="" class="dropdown-item">Годовой отчет</a></li>
+                            <li class="dropdown-divider"></li>
+                            <li><a href="" class="dropdown-item">Отчет по качеству за неделю</a></li>
+                            <li><a href="" class="dropdown-item">Отчет по качеству за месяц</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:replace="layout/page-layout.html :: page-footer"/>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>

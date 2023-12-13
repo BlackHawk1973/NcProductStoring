@@ -2,14 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Справочник видов технологических операций</title>
+    <title>Справочник сотрудников</title>
     <th:block th:insert="layout/page-layout.html :: page-head"></th:block>
 </head>
 <body>
 <div class="container-fluid">
     <div class="navbar navbar-expand-lg navbar-dark bg-secondary">
         <div class="container-fluid">
-            <a href="" class="navbar-brand">Справочник технологических операций</a>
+            <a href="" class="navbar-brand">Справочник сотрудников</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -19,7 +19,7 @@
                         <a th:href="@{/}" class="nav-link">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a th:href="@{/tech-operation/new}" class="nav-link">Добавить технологическую операцию</a>
+                        <a th:href="@{/worker/new}" class="nav-link">Добавить сотрудника</a>
                     </li>
                 </ul>
             </div>
@@ -44,21 +44,23 @@
         <thead class="table-dark">
         <tr>
             <th>ID</th>
-            <th>Наименование технологической операции</th>
+            <th>Фамилия И.О.</th>
+            <th>Должность</th>
             <th>Действия</th>
         </tr>
         </thead>
         <!-- тело таблицы -->
         <tbody>
-        <tr th:each="techOperation: ${techOperations}">
-            <td class="text-end">[[${techOperation.id}]]</td>
-            <td class="text-start">[[${techOperation.name}]]</td>
+        <tr th:each="worker: ${workers}">
+            <td class="text-end">[[${worker.id}]]</td>
+            <td class="text-start">[[${worker.name}]]</td>
+            <td class="text-start">[[${worker.post}]]</td>
             <!-- ячейка действия -->
             <td>
-                <a th:href="@{'/tech-operation/delete/' + ${techOperation.id}}" class="btn btn-danger">
+                <a th:href="@{'/worker/delete/' + ${worker.id}}" class="btn btn-danger">
                     <th:block th:replace="layout/page-layout.html :: delete-icon"/>
                 </a>
-                <a th:href="@{'/tech-operation/update/' + ${techOperation.id}}" class="btn btn-primary">
+                <a th:href="@{'/worker/update/' + ${worker.id}}" class="btn btn-primary">
                     <th:block th:replace="layout/page-layout.html :: update-icon"/>
                 </a>
             </td>
