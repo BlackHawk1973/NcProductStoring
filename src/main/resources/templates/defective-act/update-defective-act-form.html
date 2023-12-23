@@ -2,20 +2,27 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Акты о бракt</title>
-    <th:block th:insert="layout/page-layout.html :: page-head"></th:block>
+    <title>Акты о браке</title>
+    <!-- подключения локального bootstrap -->
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 </head>
 <body>
 <!-- верстка с использованием bootstrap -->
 <div class="container-fluid text-center">
     <div class="container-sm align-content-center text-center">
-        <h1>Добавление новой записи в таблицу актов о браке</h1>
+        <h1>Редактирование записи в таблице Актов о браке</h1>
         <!-- вывод сообщения danger message -->
         <p class="alert alert-danger" th:if="${dangerMessage != null}">
             [[${dangerMessage}]]
         </p>
-        <form method="post" th:action="@{/defective-act/new}" th:object="${defectiveAct}">
-            <!--Акт о браке-->
+        <form method="post" th:action="@{defective-act/update}" th:object="${defectiveAct}">
+            <!-- id (пример с полем только для чтения) -->
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label" for="id">ID: </label>
+                <div class="col-sm-3">
+                    <input class="form-control" type="number" id="id" th:field="*{id}" readonly/>
+                </div>
+            </div>
             <div class="mb-3 row">
                 <label class="col-sm-2 col-form-label" for="number">№ Акта: </label>
                 <div class="col-sm-3">
@@ -62,7 +69,6 @@
                     </select>
                 </div>
             </div>
-
             <!-- кнопка отправки формы -->
             <div class="mb-3 row">
                 <div class="col-sm-2"></div>
@@ -76,9 +82,5 @@
         </form>
     </div>
 </div>
-<th:block th:replace="layout/page-layout.html :: page-footer"/>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
 </body>
 </html>

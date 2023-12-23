@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Акты о браке</title>
+    <th:block th:insert="layout/page-layout.html :: page-head"></th:block>
+</head>
+<body>
+<!-- верстка с использованием bootstrap -->
+<div class="container-fluid text-center">
+    <div class="container-sm align-content-center text-center">
+        <h1>Добавление нового пункта в акт о браке</h1>
+        <!-- вывод сообщения danger message -->
+        <p class="alert alert-danger" th:if="${dangerMessage != null}">
+            [[${dangerMessage}]]
+        </p>
+        <form method="post" th:action="@{/act-item/new}" th:object="${actItem}">
+            <!--Акт о браке-->
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label" for="lot-number"><b>№ партии: </b></label>
+                <div class="col-sm-3">
+                    <input class="form-control" type="text" id="lot-number" required minlength="1" th:field="*{lotNumber}">
+                </div>
+                <label class="col-sm-2 col-form-label" for="product-date"><b>Дата производства: </b></label>
+                <div class="col-sm-3">
+                    <!--/*@thymesVar id="date" type=""*/-->
+                    <input class="form-control" type="date" id="product-date" th:field="${actItem.productDate}">
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <!--                <label class="col-sm-2 col-form-label" for="idWorker1"></label>-->
+                <!--Сотрудник 1-->
+                <div class="col-sm-6">
+                    <label class="col-sm-6 col-form-label" for="sector"><b>Участок: </b></label>
+                    <select class="form-select" id="sector" th:field="*{sector}">
+                        <option th:each="sector: ${sectors}" th:value="${sector.id}">
+                            [[${sector.name}]]
+                        </option>
+                    </select>
+                </div>
+                <div class="col-sm-6">
+                    <label class="col-sm-6 col-form-label" for="tech-operation"><b>Технологическая операция: </b></label>
+                    <select class="form-select" id="tech-operation" th:field="*{techOperation}">
+                        <option th:each="techOperation: ${techOperations}" th:value="${techOperation.id}">
+                            [[${techOperation.name}]]
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <div class="col-sm-6">
+                    <label class="col-sm-6 col-form-label" for="team"><b>Бригада: </b></label>
+                    <select class="form-select" id="team" th:field="*{team}">
+                        <option th:each=" team: ${teams}" th:value="${team.id}">
+                            [[${team.name}]]
+                        </option>
+                    </select>
+                </div>
+                <div class="col-sm-6">
+                    <label class="col-sm-6 col-form-label" for="production"><b>Продукция: </b></label>
+                    <select class="form-select" id="production" th:field="*{production}">
+                        <option th:each="production: ${productions}" th:value="${production.id}">
+                            [[${production.name}]]
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label class="col-sm-3 col-form-label" for="quantity"><b>Количество лент: </b></label>
+                <div class="col-sm-3">
+                    <input class="form-control" type="number" id="quantity" required min="0" th:field="*{quantity}">
+                </div>
+                <label class="col-sm-3 col-form-label" for="weight"><b>Вес: </b></label>
+                <div class="col-sm-3">
+                    <!--/*@thymesVar id="date" type=""*/-->
+                    <input class="form-control" type="number" id="weight" min="1" step="any" th:field="*{weight}">
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <div class="col-sm-6">
+                    <label class="col-sm-6 col-form-label" for="nc-product-type"><b>Вид брака: </b></label>
+                    <select class="form-select" id="nc-product-type" th:field="*{ncProductType}">
+                        <option th:each=" ncProductType: ${ncProductTypes}" th:value="${ncProductType.id}">
+                            [[${ncProductType.name}]]
+                        </option>
+                    </select>
+                </div>
+                <div class="col-sm-6">
+                    <label class="col-sm-6 col-form-label" for="nc-product-cause"><b>Причина брака: </b></label>
+                    <select class="form-select" id="nc-product-cause" th:field="*{ncProductCause}">
+                        <option th:each="ncProductCause: ${ncProductCauses}" th:value="${ncProductCause.id}">
+                            [[${ncProductCause.name}]]
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <div class="col-sm-6">
+                    <label class="col-sm-6 col-form-label" for="defective-act"><b>№ акта о браке: </b></label>
+                    <select class="form-select" id="defective-act" th:field="*{defectiveAct}">
+                        <option th:each=" defectiveAct: ${defectiveActs}" th:value="${defectiveAct.id}">
+                            [[${defectiveAct.number}]]
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- кнопка отправки формы -->
+            <div class="mb-3 row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-5">
+                    <button class="btn btn-success form-control">Сохранить</button>
+                </div>
+                <div class="col-sm-5">
+                    <a class="btn btn-danger form-control" th:href="@{/defective-act}">Отменить</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

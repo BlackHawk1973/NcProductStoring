@@ -54,7 +54,7 @@
         <tr th:each="defectiveAct: ${defectiveActs}">
             <td class="text-end">[[${defectiveAct.id}]]</td>
             <td class="text-start">[[${defectiveAct.number}]]</td>
-            <td class="text-start">[[${defectiveAct.date}]]</td>
+            <td class="text-center">[[${#dates.format(defectiveAct.date, "dd.MM.yyyy")}]]</td>
             <!-- ячейка действия -->
             <td>
                 <a class="btn btn-danger" th:href="@{'/defective-act/delete/' + ${defectiveAct.id}}">

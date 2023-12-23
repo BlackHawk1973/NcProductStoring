@@ -2,6 +2,8 @@ package org.top.ncproductstoring.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "team_t")
 public class Team {
@@ -13,10 +15,15 @@ public class Team {
     @Column(name = "name_f", nullable = false, unique = true)
     private String name;
 
+    //Связь с таблицей содержимого акта о браке
+    @OneToMany(mappedBy = "team")
+    private Set<ActItem> actItemSet;
+
     //Конструкторы
     public Team() {
         id = 0;
         name = "";
+        actItemSet = null;
     }
 
     //Геттеры и сеттеры
@@ -34,6 +41,14 @@ public class Team {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<ActItem> getActItemSet() {
+        return actItemSet;
+    }
+
+    public void setActItemSet(Set<ActItem> actItemSet) {
+        this.actItemSet = actItemSet;
     }
 
     @Override

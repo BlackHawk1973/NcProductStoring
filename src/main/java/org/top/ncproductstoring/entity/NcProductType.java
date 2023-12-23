@@ -2,6 +2,8 @@ package org.top.ncproductstoring.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 //Справочник видов брака
 @Entity
 @Table(name = "nc_prod_type_t")
@@ -22,12 +24,17 @@ public class NcProductType {
     @Column(name = "name_f", nullable = false)
     private String name;
 
+    //Связь с таблицей содержимого акта о браке
+    @OneToMany(mappedBy = "ncProductType")
+    private Set<ActItem> actItemSet;
+
     //Конструкторы
     public NcProductType() {
         id = 0;
         code = 0;
         type = "";
         name = "";
+        actItemSet = null;
     }
 
     //Геттеры и сеттеры
@@ -63,8 +70,16 @@ public class NcProductType {
     public void setName(String name) {
         this.name = name;
     }
-    //toString
 
+    public Set<ActItem> getActItemSet() {
+        return actItemSet;
+    }
+
+    public void setActItemSet(Set<ActItem> actItemSet) {
+        this.actItemSet = actItemSet;
+    }
+
+    //toString
     @Override
     public String toString() {
         return "id - " + id + "| code - " + code + "| type - " + type + "| name - " + name;

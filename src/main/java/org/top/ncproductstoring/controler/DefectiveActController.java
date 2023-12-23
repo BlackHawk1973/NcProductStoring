@@ -7,11 +7,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.top.ncproductstoring.entity.ActItem;
 import org.top.ncproductstoring.entity.DefectiveAct;
 import org.top.ncproductstoring.entity.NcProductCause;
+import org.top.ncproductstoring.entity.Worker;
 import org.top.ncproductstoring.service.DefectiveActService;
+import org.top.ncproductstoring.service.WorkerService;
 
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 //DefectiveActController - контроллер для работы со таблицей актов о браке
@@ -21,9 +27,11 @@ public class DefectiveActController {
 
     //Внедрение зависимости DefectiveActService
     private final DefectiveActService defectiveActService;
+    private final WorkerService workerService;
 
-    public DefectiveActController(DefectiveActService defectiveActService) {
+    public DefectiveActController(DefectiveActService defectiveActService, WorkerService workerService) {
         this.defectiveActService = defectiveActService;
+        this.workerService = workerService;
     }
 
     // Обработчик получения всех объектов
@@ -35,13 +43,31 @@ public class DefectiveActController {
         return "defective-act/defective-act-list";
     }
 
+    // Обработчик получения детальной информации об объекте по id
+    // http://localhost:8080/defective-act/{id}
+    @GetMapping("{id}")
+    public String findById(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
+        Optional<DefectiveAct> defectiveAct = defectiveActService.findById(id);
+        if (defectiveAct.isPresent()) {
+            List<ActItem> actItems = defectiveAct.get().getActItemSet().stream().toList();
+            model.addAttribute("defectiveAct", defectiveAct.get());
+            model.addAttribute("actItems", actItems);
+            return "defective-act/defective-act-details";
+        }
+        redirectAttributes.addFlashAttribute("dangerMessage",
+                "Запись с id " + id + " не найдена" );
+        return "redirect:/defective-act";
+    }
+
     // Обработчики добавление объекта
     // первый получает форму, второй обрабатывает
     // http://localhost:8080/defective-act/new
     @GetMapping("new")
     public String getAddForm(Model model) {
         DefectiveAct defectiveAct = new DefectiveAct(); // объект для заполнения в форме
+        Iterable<Worker> workers = workerService.findAll();
         model.addAttribute("defectiveAct", defectiveAct);
+        model.addAttribute("workers", workers);
         return "defective-act/add-defective-act-form";
     }
 
@@ -91,8 +117,10 @@ public class DefectiveActController {
     @GetMapping("/update/{id}")
     public String getUpdateForm(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
         Optional<DefectiveAct> updated = defectiveActService.findById(id);
+        Iterable<Worker> workers = workerService.findAll();
         if (updated.isPresent()) {
             model.addAttribute("defectiveAct", updated.get());
+            model.addAttribute("workers", workers);
             return "defective-act/update-defective-act-form";
         } else {
             redirectAttributes.addFlashAttribute("dangerMessage",
@@ -120,7 +148,7 @@ public class DefectiveActController {
                 // process exception here
                 System.out.println(">Возникла ошибка: " + e.getMessage());
                 redirectAttributes.addFlashAttribute("dangerMessage",
-                        "Ошибка записи в БД: Запись с такой причиной брака уже существует");
+                        "Ошибка записи в БД: Запись с таким номером акта уже существует");
             } else {
                 throw e;
             }

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Акты о браке</title>
+    <!-- подключения локального bootstrap -->
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<!-- верстка с использованием bootstrap -->
+<div class="container-fluid text-center">
+    <div class="container-sm align-content-center text-center">
+        <h1>Детальная информация по акту о браке</h1>
+        <!-- вывод сообщения danger message -->
+        <p class="alert alert-danger" th:if="${dangerMessage != null}">
+            [[${dangerMessage}]]
+        </p>
+        <div class="mb-1 row">
+            <div class="fs-5 text-center"><b>Акта о браке на производстве №[[${defectiveAct.number}]]</b></div>
+        </div>
+        <div class="mb-1 row">
+            <div class="fs-5 text-center">
+                <u>[[${#dates.format(defectiveAct.date, "dd MMMM yyyy")}]]</u>
+            </div>
+        </div>
+        <div class="mb-3 row fs-5 text-start">Комиссия в составе:</div>
+        <div class="mb-1 row fs-5 text-start">[[${defectiveAct.worker1.post + " " + defectiveAct.worker1.name}]]</div>
+        <div class="mb-1 row fs-5 text-start">[[${defectiveAct.worker2.post + " " + defectiveAct.worker2.name}]]</div>
+        <div class="mb-1 row fs-5 text-start">[[${defectiveAct.worker3.post + " " + defectiveAct.worker3.name}]]</div>
+        <div class="mb-1 row fs-5 text-start">[[${defectiveAct.worker4.post + " " + defectiveAct.worker4.name}]]</div>
+        <br>
+        <div class="mb-2 row fs-6 text-start">В процессе производства образовался брак:</div>
+        <!-- вывод таблицы через цикл -->
+        <table class="table table-bordered">
+            <!-- шапка таблицы -->
+            <thead class="table-dark">
+            <tr>
+                <th>Номер партии</th>
+                <th>Дата</th>
+                <th>Продукция</th>
+                <th>Количество лент, шт.</th>
+                <th>Вес, кг.</th>
+                <th>Действия</th>
+            </tr>
+            </thead>
+            <!-- тело таблицы -->
+            <tbody>
+            <tr th:each="actItem: ${actItems}">
+                <td class="text-center">[[${actItem.lotNumber}]]</td>
+                <td class="text-center">[[${#dates.format(actItem.productDate, "dd.MM.yyyy")}]]</td>
+                <td class="text-start">[[${actItem.production.getName()}]]</td>
+                <td class="text-end">[[${actItem.quantity}]]</td>
+                <td class="text-end">[[${actItem.weight}]]</td>
+                <!-- ячейка действия -->
+                <td>
+                    <a class="btn btn-danger" th:href="@{'/act-item/delete/' + ${actItem.id}}">
+                        <th:block th:replace="layout/page-layout.html :: delete-icon"/>
+                    </a>
+                    <a class="btn btn-primary" th:href="@{'/act-item/update/' + ${actItem.id}}">
+                        <th:block th:replace="layout/page-layout.html :: update-icon"/>
+                    </a>
+                    <a class="btn btn-success" th:href="@{'/act-item-details/' + ${actItem.id}}">
+                        <th:block th:replace="layout/page-layout.html :: detail-icon"/>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <!-- кнопка отправки формы -->
+        <div class="mb-3 row justify-content-center">
+            <!--        <div class="col-sm-2"></div>-->
+            <div class="col-sm-4">
+
+                <a class="btn btn-success form-control" th:href="@{'/act-item/new/' + ${defectiveAct.id}}">Добавить новый пункт в акт</a>
+            </div>
+            <div class="col-sm-4">
+                <a class="btn btn-primary form-control" th:href="@{/defective-act}">Вернуться к списку актов</a>
+            </div>
+        </div>
+    </div>
+    <br><br><br>
+    <!-- Вставка фрагмента футера -->
+    <th:block th:replace="layout/page-layout.html :: page-footer"/>
+</div>
+</body>
+</html>
